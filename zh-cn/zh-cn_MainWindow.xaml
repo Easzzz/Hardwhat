@@ -1,0 +1,794 @@
+<Window x:Name="Hardwhat" x:Class="Hardwhat.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="硬件信息查看器" Width="800" Height="500">
+    <Window.Resources>
+        <Style x:Key="DarkScrollBar" TargetType="ScrollBar">
+            <Setter Property="Orientation" Value="Vertical"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid>
+                            <Border Background="#181C26" CornerRadius="5"/>
+                            <Track x:Name="PART_Track" IsDirectionReversed="True" Orientation="Vertical">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="Thumb">
+                                                <Border Background="#FF212636" CornerRadius="5"
+                                                    BorderBrush="#2E3548" BorderThickness="1"/>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Visibility="Hidden"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Visibility="Hidden"/>
+                                </Track.DecreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="Guide" Background="#FF0F1117">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="4"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar -->
+        <Border x:Name="SidebarBorder" Grid.Column="0" Visibility="Collapsed">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#181C26" Offset="0.204"/>
+                    <GradientStop Color="#FF0F1117" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <StackPanel VerticalAlignment="Top" Margin="0,12,0,0">
+
+                <!-- OS (系统) -->
+                <Button Width="38" Height="38" ToolTip="系统" Click="BtnOS_Click" Cursor="Hand" Margin="0,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="8">
+                                <Path x:Name="icon" Stretch="Uniform"
+                          Stroke="#8A90A2" StrokeThickness="1.2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          Data="M12 17V21 M14.305 7.53L15.228 7.148 M15.228 4.852L14.305 4.469 M16.852 3.228L16.469 2.304 M16.852 8.772L16.469 9.695 M19.148 3.228L19.531 2.304 M19.53 9.696L19.148 8.772 M20.772 4.852L21.696 4.469 M20.772 7.148L21.696 7.531 M22 13V15A2 2 0 0 1 20 17H4A2 2 0 0 1 2 15V5A2 2 0 0 1 4 3H11 M8 21H16 M15 6A3 3 0 1 1 21 6A3 3 0 1 1 15 6"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- CPU -->
+                <Button Width="38" Height="38" ToolTip="处理器" Click="BtnCPU_Click" Cursor="Hand" Margin="0,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="7">
+                                <Path x:Name="icon" Stretch="Uniform"
+                          Stroke="#8A90A2" StrokeThickness="1.2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          Data="M12 20V22 M12 2V4 M17 20V22 M17 2V4 M2 12H4 M2 17H4 M2 7H4 M20 12H22 M20 17H22 M20 7H22 M7 20V22 M7 2V4 M6 4H18A2 2 0 0 1 20 6V18A2 2 0 0 1 18 20H6A2 2 0 0 1 4 18V6A2 2 0 0 1 6 4Z M9 8H15A1 1 0 0 1 16 9V15A1 1 0 0 1 15 16H9A1 1 0 0 1 8 15V9A1 1 0 0 1 9 8Z"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- GPU -->
+                <Button Width="38" Height="38" ToolTip="显卡" Click="BtnGPU_Click" Cursor="Hand" Margin="0,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="8,7,7,7">
+                                <Path x:Name="icon" Stretch="Uniform"
+                          Stroke="#8A90A2" StrokeThickness="1.2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          Data="M2 17H20A2 2 0 0 0 22 15V7A2 2 0 0 0 20 5H2 M2 21V3 M7 17V20A1 1 0 0 0 8 21H13A1 1 0 0 0 14 20V17 M14 11A2 2 0 1 1 18 11A2 2 0 1 1 14 11 M6 11A2 2 0 1 1 10 11A2 2 0 1 1 6 11"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- 内存 -->
+                <Button Width="38" Height="38" ToolTip="内存" Click="BtnMEM_Click" Cursor="Hand" Margin="0,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="7">
+                                <Path x:Name="icon" Stretch="Uniform"
+                          Stroke="#8A90A2" StrokeThickness="1.2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          Data="M12 12V10 M12 18V16 M16 12V10 M16 18V16 M2 11H3.5 M20 18V16 M20.5 11H22 M4 18V16 M8 12V10 M8 18V16 M4 6H20A2 2 0 0 1 22 8V14A2 2 0 0 1 20 16H4A2 2 0 0 1 2 14V8A2 2 0 0 1 4 6Z"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- 硬盘 -->
+                <Button Width="38" Height="38" ToolTip="硬盘" Click="BtnDISK_Click" Cursor="Hand" Margin="0,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="7">
+                                <Path x:Name="icon" Stretch="Uniform"
+                          Stroke="#8A90A2" StrokeThickness="1.2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          Data="M6 16H6.01 M10 16H10.01 M5.45 5.11L2.212 11.577A2 2 0 0 0 2 12.473V18A2 2 0 0 0 4 20H20A2 2 0 0 0 22 18V12.473A2 2 0 0 0 21.788 11.577L18.55 5.11A2 2 0 0 0 16.76 4H7.24A2 2 0 0 0 5.45 5.11Z M2.054 12.013H21.946"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- 主板 -->
+                <Button Width="38" Height="38" ToolTip="主板" Click="BtnMB_Click" Cursor="Hand" Margin="0,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="8">
+                                <Path x:Name="icon" Stretch="Uniform"
+                          Stroke="#8A90A2" StrokeThickness="1.2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          Data="M5 3H19A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3Z M11 9H15A2 2 0 0 0 17 7V3 M7 9A2 2 0 1 1 11 9A2 2 0 1 1 7 9 M7 21V17A2 2 0 0 1 9 15H13 M13 15A2 2 0 1 1 17 15A2 2 0 1 1 13 15"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- 网络 -->
+                <Button Width="38" Height="38" ToolTip="网络" Click="BtnNET_Click" Cursor="Hand" Margin="0,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="8">
+                                <Path x:Name="icon" Stretch="Uniform"
+                          Stroke="#8A90A2" StrokeThickness="1.2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          Data="M17 16H22V22H17V16Z M3 16H8V22H3V16Z M10 2H15V8H10V2Z M5 16V13A1 1 0 0 1 6 12H18A1 1 0 0 1 19 13V16 M12 12V8"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!-- 音频 -->
+                <Button Width="38" Height="38" ToolTip="音频" Click="BtnAUDIO_Click" Cursor="Hand" Margin="0,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="9,8,8,8">
+                                <Path x:Name="icon" Stretch="Uniform"
+                          Stroke="#8A90A2" StrokeThickness="1.2"
+                          StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                          StrokeLineJoin="Round"
+                          Data="M11 4.702A0.705 0.705 0 0 0 9.797 4.204L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3A1 1 0 0 0 2 9V15A1 1 0 0 0 3 16H5.416A1.4 1.4 0 0 1 6.413 16.413L9.796 19.797A0.705 0.705 0 0 0 11 19.298V4.702Z M16 9A5 5 0 0 1 16 15 M19.364 18.364A9 9 0 0 0 19.364 5.636"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </StackPanel>
+        </Border>
+
+        <Border x:Name="DividingLine" Grid.Column="1"  Visibility="Collapsed">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#282F40" Offset="0.204"/>
+                    <GradientStop Color="#FF0F1117" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <!-- 主内容区 -->
+        <ScrollViewer x:Name="MainScroll" Grid.Column="2"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility = "Auto"
+                      Visibility="Collapsed"
+                      Margin="0,0,0,0">
+            <ScrollViewer.Resources>
+                <Style TargetType="ScrollBar" BasedOn="{StaticResource DarkScrollBar}">
+                    <Setter Property="Margin" Value="0,2,2,2"/>
+                </Style>
+            </ScrollViewer.Resources>
+            <StackPanel>
+
+                <!-- ==================== 操作系统 ==================== -->
+                <Label x:Name="LblOS" Content="操作系统"
+       Foreground="#E2E6ED" FontSize="28"
+       FontFamily="975 圆体" FontWeight="Bold"
+       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+        BorderThickness="1" CornerRadius="16"
+        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- 制造商 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="制造商" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtOsManufacturer" Grid.Row="0" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 系统名称 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="系统名称" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtOsCaption" Grid.Row="1" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 版本 -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="版本" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtOsVersion" Grid.Row="2" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 系统架构 -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="系统架构" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtOsArchitecture" Grid.Row="3" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 系统版本号 -->
+                        <TextBlock Grid.Row="4" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="系统版本号" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtOsBuildNumber" Grid.Row="4" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== 处理器 ==================== -->
+                <Label x:Name="LblCPU" Content="处理器"
+       Foreground="#E2E6ED" FontSize="28"
+       FontFamily="975 圆体" FontWeight="Bold"
+       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+        BorderThickness="1" CornerRadius="16"
+        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="32"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- 型号 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="型号" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuModel" Grid.Row="0" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Center"/>
+
+                        <!-- 核心数 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="核心数" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuCores" Grid.Row="1" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Center"/>
+
+                        <!-- 逻辑处理器 -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="逻辑处理器" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuThreads" Grid.Row="2" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Center"/>
+
+                        <!-- 最大频率 -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="最大频率" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuClock" Grid.Row="3" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Center"/>
+
+                        <!-- 插槽 -->
+                        <TextBlock Grid.Row="4" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="插槽" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuSocket" Grid.Row="4" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Center"/>
+
+                        <!-- 制造商 -->
+                        <TextBlock Grid.Row="5" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="制造商" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuManufacturer" Grid.Row="5" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== 显卡 ==================== -->
+                <Label x:Name="LblGPU" Content="显卡"
+       Foreground="#E2E6ED" FontSize="28"
+       FontFamily="975 圆体" FontWeight="Bold"
+       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+        BorderThickness="1" CornerRadius="16"
+        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- 名称 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="名称" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtGpuName" Grid.Row="0" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 显存 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="显存" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtGpuRam" Grid.Row="1" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 驱动版本 -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="驱动版本" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtGpuDriver" Grid.Row="2" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 制造商 -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="制造商" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtGpuManufacturer" Grid.Row="3" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== 内存 ==================== -->
+                <Label x:Name="LblMEM" Content="内存"
+       Foreground="#E2E6ED" FontSize="28"
+       FontFamily="975 圆体" FontWeight="Bold"
+       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+        BorderThickness="1" CornerRadius="16"
+        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- 制造商 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="制造商" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMemManufacturer" Grid.Row="0" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"/>
+
+                        <!-- 容量 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="容量" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMemCapacity" Grid.Row="1" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"/>
+
+                        <!-- 频率 -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="频率" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMemSpeed" Grid.Row="2" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== 硬盘 ==================== -->
+                <Label x:Name="LblDISK" Content="硬盘"
+       Foreground="#E2E6ED" FontSize="28"
+       FontFamily="975 圆体" FontWeight="Bold"
+       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+        BorderThickness="1" CornerRadius="16"
+        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- 型号 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="型号" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtDiskModel" Grid.Row="0" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 容量 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="容量" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtDiskCapacity" Grid.Row="1" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 类型 -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="类型" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtDiskType" Grid.Row="2" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 接口 -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="接口" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtDiskInterface" Grid.Row="3" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== 主板 ==================== -->
+                <Label x:Name="LblMB" Content="主板"
+       Foreground="#E2E6ED" FontSize="28"
+       FontFamily="975 圆体" FontWeight="Bold"
+       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+        BorderThickness="1" CornerRadius="16"
+        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- 制造商 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="制造商" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMbManufacturer" Grid.Row="0" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 产品名称 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="产品名称" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMbProduct" Grid.Row="1" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 版本 -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="版本" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMbVersion" Grid.Row="2" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 序列号 -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="序列号" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMbSerial" Grid.Row="3" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== 网络 ==================== -->
+                <Label x:Name="LblNET" Content="网络"
+       Foreground="#E2E6ED" FontSize="28"
+       FontFamily="975 圆体" FontWeight="Bold"
+       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+        BorderThickness="1" CornerRadius="16"
+        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- 名称 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="名称" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtNetName" Grid.Row="0" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 制造商 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="制造商" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtNetManufacturer" Grid.Row="1" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- MAC地址 -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="MAC地址" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtNetMAC" Grid.Row="2" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 速度 -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="速度" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtNetSpeed" Grid.Row="3" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 类型 -->
+                        <TextBlock Grid.Row="4" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="类型" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtNetType" Grid.Row="4" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== 音频 ==================== -->
+                <Label x:Name="LblAUDIO" Content="音频"
+       Foreground="#E2E6ED" FontSize="28"
+       FontFamily="975 圆体" FontWeight="Bold"
+       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+        BorderThickness="1" CornerRadius="16"
+        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- 名称 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="名称" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtAudioName" Grid.Row="0" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+
+                        <!-- 制造商 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                   Foreground="#8A90A2" FontSize="14"
+                   Text="制造商" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtAudioManufacturer" Grid.Row="1" Grid.Column="1"
+                   Foreground="#E2E6ED" FontSize="14"
+                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+        
+        <!-- 按钮和欢迎文字 -->
+        <Grid x:Name="InnerGrid" Grid.ColumnSpan="3" Margin="0,0,0,-1">
+            <Button x:Name="ToSearch" Content="点击搜索硬件信息"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Width="284" Height="70" FontSize="24"
+                    FontFamily="975 圆体" BorderThickness="8,8,8,8"
+                    Click="ToSearch_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                CornerRadius="6"
+                                Background="#181C26"
+                                BorderBrush="#2E3548"
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter Property="Foreground" Value="#C5CBD6"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#3E4862"/>
+                                <Setter Property="Foreground" Value="#E2E6ED"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#495165"/>
+                                <Setter Property="Foreground" Value="#E2E6ED"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Label x:Name="Welcome" Content="欢迎" HorizontalAlignment="Center" Margin="0,118,0,0" VerticalAlignment="Top" Height="85" Width="446" FontSize="36" Foreground="#FFC5CBD6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="975 圆体"/>
+        </Grid>
+    </Grid>
+</Window>

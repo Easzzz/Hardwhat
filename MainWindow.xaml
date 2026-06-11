@@ -1,0 +1,849 @@
+﻿<Window x:Name="Hardwhat" x:Class="Hardwhat.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Hardwhat" Width="800" Height="500">
+    <Window.Icon>
+        <DrawingImage>
+            <DrawingImage.Drawing>
+                <DrawingGroup>
+                    <GeometryDrawing Brush="Transparent">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="Black" Thickness="2" StartLineCap="Round" EndLineCap="Round" LineJoin="Round"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <RectangleGeometry RadiusX="2" RadiusY="2" Rect="5,2,14,20"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="Transparent">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="Black" Thickness="2" StartLineCap="Round" EndLineCap="Round" LineJoin="Round"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry Figures="M15,14 L15.01,14"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="Transparent">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="Black" Thickness="2" StartLineCap="Round" EndLineCap="Round" LineJoin="Round"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry Figures="M9,6 L15,6"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                    <GeometryDrawing Brush="Transparent">
+                        <GeometryDrawing.Pen>
+                            <Pen Brush="Black" Thickness="2" StartLineCap="Round" EndLineCap="Round" LineJoin="Round"/>
+                        </GeometryDrawing.Pen>
+                        <GeometryDrawing.Geometry>
+                            <PathGeometry Figures="M9,10 L15,10"/>
+                        </GeometryDrawing.Geometry>
+                    </GeometryDrawing>
+                </DrawingGroup>
+            </DrawingImage.Drawing>
+        </DrawingImage>
+    </Window.Icon>
+
+    <Window.Resources>
+
+        <Style x:Key="DarkScrollBar" TargetType="ScrollBar">
+            <Setter Property="Orientation" Value="Vertical"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid>
+                            <Border Background="#181C26" CornerRadius="5"/>
+                            <Track x:Name="PART_Track" IsDirectionReversed="True" Orientation="Vertical">
+                                <Track.Thumb>
+                                    <Thumb>
+                                        <Thumb.Template>
+                                            <ControlTemplate TargetType="Thumb">
+                                                <Border Background="#FF212636" CornerRadius="5"
+                                                        BorderBrush="#2E3548" BorderThickness="1"/>
+                                            </ControlTemplate>
+                                        </Thumb.Template>
+                                    </Thumb>
+                                </Track.Thumb>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Visibility="Hidden"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Visibility="Hidden"/>
+                                </Track.DecreaseRepeatButton>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <Grid x:Name="Guide" Background="#FF0F1117">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"/>
+            <!--Sidebar Width-->
+            <ColumnDefinition Width="4"/>
+            <!--Diving Line Width-->
+            <ColumnDefinition Width="*"/>
+            <!--Main Info Area-->
+        </Grid.ColumnDefinitions>
+
+        <!--Sidebar-->
+        <Border x:Name="SidebarBorder" Grid.Column="0" Visibility="Collapsed">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#181C26" Offset="0.204"/>
+                    <GradientStop Color="#FF0F1117" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <!--Sidebar Hardware Icon-->
+            <StackPanel VerticalAlignment="Top" Margin="0,12,0,0">
+
+                <!--OS-->
+                <Button Width="38" Height="38" ToolTip="System" Click="BtnOS_Click" Cursor="Hand" Margin="2,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="8">
+                                <Path x:Name="icon" Stretch="Uniform"
+                                      Stroke="#8A90A2" StrokeThickness="1.2"
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      Data="M12 17V21 M14.305 7.53L15.228 7.148 M15.228 4.852L14.305 4.469 M16.852 3.228L16.469 2.304 M16.852 8.772L16.469 9.695 M19.148 3.228L19.531 2.304 M19.53 9.696L19.148 8.772 M20.772 4.852L21.696 4.469 M20.772 7.148L21.696 7.531 M22 13V15A2 2 0 0 1 20 17H4A2 2 0 0 1 2 15V5A2 2 0 0 1 4 3H11 M8 21H16 M15 6A3 3 0 1 1 21 6A3 3 0 1 1 15 6"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!--CPU-->
+                <Button Width="38" Height="38" ToolTip="CPU" Click="BtnCPU_Click" Cursor="Hand" Margin="2,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="7">
+                                <Path x:Name="icon" Stretch="Uniform"
+                                      Stroke="#8A90A2" StrokeThickness="1.2"
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      Data="M12 20V22 M12 2V4 M17 20V22 M17 2V4 M2 12H4 M2 17H4 M2 7H4 M20 12H22 M20 17H22 M20 7H22 M7 20V22 M7 2V4 M6 4H18A2 2 0 0 1 20 6V18A2 2 0 0 1 18 20H6A2 2 0 0 1 4 18V6A2 2 0 0 1 6 4Z M9 8H15A1 1 0 0 1 16 9V15A1 1 0 0 1 15 16H9A1 1 0 0 1 8 15V9A1 1 0 0 1 9 8Z"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!--GPU-->
+                <Button Width="38" Height="38" ToolTip="GPU" Click="BtnGPU_Click" Cursor="Hand" Margin="2,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="8,7,7,7">
+                                <Path x:Name="icon" Stretch="Uniform"
+                                      Stroke="#8A90A2" StrokeThickness="1.2"
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      Data="M2 17H20A2 2 0 0 0 22 15V7A2 2 0 0 0 20 5H2 M2 21V3 M7 17V20A1 1 0 0 0 8 21H13A1 1 0 0 0 14 20V17 M14 11A2 2 0 1 1 18 11A2 2 0 1 1 14 11 M6 11A2 2 0 1 1 10 11A2 2 0 1 1 6 11"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!--MEM-->
+                <Button Width="38" Height="38" ToolTip="Memory" Click="BtnMEM_Click" Cursor="Hand" Margin="2,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="7">
+                                <Path x:Name="icon" Stretch="Uniform"
+                                      Stroke="#8A90A2" StrokeThickness="1.2"
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      Data="M12 12V10 M12 18V16 M16 12V10 M16 18V16 M2 11H3.5 M20 18V16 M20.5 11H22 M4 18V16 M8 12V10 M8 18V16 M4 6H20A2 2 0 0 1 22 8V14A2 2 0 0 1 20 16H4A2 2 0 0 1 2 14V8A2 2 0 0 1 4 6Z"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!--DISK-->
+                <Button Width="38" Height="38" ToolTip="Disk" Click="BtnDISK_Click" Cursor="Hand" Margin="2,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="7">
+                                <Path x:Name="icon" Stretch="Uniform"
+                                      Stroke="#8A90A2" StrokeThickness="1.2"
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      Data="M6 16H6.01 M10 16H10.01 M5.45 5.11L2.212 11.577A2 2 0 0 0 2 12.473V18A2 2 0 0 0 4 20H20A2 2 0 0 0 22 18V12.473A2 2 0 0 0 21.788 11.577L18.55 5.11A2 2 0 0 0 16.76 4H7.24A2 2 0 0 0 5.45 5.11Z M2.054 12.013H21.946"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!--BOARD-->
+                <Button Width="38" Height="38" ToolTip="Mainboard" Click="BtnMB_Click" Cursor="Hand" Margin="2,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="8">
+                                <Path x:Name="icon" Stretch="Uniform"
+                                      Stroke="#8A90A2" StrokeThickness="1.2"
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      Data="M5 3H19A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3Z M11 9H15A2 2 0 0 0 17 7V3 M7 9A2 2 0 1 1 11 9A2 2 0 1 1 7 9 M7 21V17A2 2 0 0 1 9 15H13 M13 15A2 2 0 1 1 17 15A2 2 0 1 1 13 15"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!--NETWORK-->
+                <Button Width="38" Height="38" ToolTip="Network" Click="BtnNET_Click" Cursor="Hand" Margin="2,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="8">
+                                <Path x:Name="icon" Stretch="Uniform"
+                                      Stroke="#8A90A2" StrokeThickness="1.2"
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      Data="M17 16H22V22H17V16Z M3 16H8V22H3V16Z M10 2H15V8H10V2Z M5 16V13A1 1 0 0 1 6 12H18A1 1 0 0 1 19 13V16 M12 12V8"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <!--AUDIO-->
+                <Button Width="38" Height="38" ToolTip="Audio" Click="BtnAUDIO_Click" Cursor="Hand" Margin="2,3,0,0">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border" Background="Transparent" CornerRadius="6" Padding="9,8,8,8">
+                                <Path x:Name="icon" Stretch="Uniform"
+                                      Stroke="#8A90A2" StrokeThickness="1.2"
+                                      StrokeStartLineCap="Round" StrokeEndLineCap="Round"
+                                      StrokeLineJoin="Round"
+                                      Data="M11 4.702A0.705 0.705 0 0 0 9.797 4.204L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3A1 1 0 0 0 2 9V15A1 1 0 0 0 3 16H5.416A1.4 1.4 0 0 1 6.413 16.413L9.796 19.797A0.705 0.705 0 0 0 11 19.298V4.702Z M16 9A5 5 0 0 1 16 15 M19.364 18.364A9 9 0 0 0 19.364 5.636"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#E2E6ED"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                    <Setter TargetName="icon" Property="Stroke" Value="#FFFFFF"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+            </StackPanel>
+        </Border>
+
+        <!--Dividing Line-->
+        <Border x:Name="DividingLine" Grid.Column="1" Visibility="Collapsed">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#282F40" Offset="0.204"/>
+                    <GradientStop Color="#FF0F1117" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <!--Main Area(ScrollViewer)-->
+        <ScrollViewer x:Name="MainScroll" Grid.Column="2"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Visibility="Collapsed"
+                      Margin="0,0,0,0">
+            <ScrollViewer.Resources>
+                <Style TargetType="ScrollBar" BasedOn="{StaticResource DarkScrollBar}">
+                    <Setter Property="Margin" Value="0,2,2,2"/>
+                </Style>
+            </ScrollViewer.Resources>
+
+            <StackPanel>
+
+                <!-- ==================== OS ==================== -->
+                <Label x:Name="LblOS" Content="Operating System"
+                       Foreground="#E2E6ED" FontSize="28"
+                       FontFamily="975 圆体" FontWeight="Bold"
+                       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+                        BorderThickness="1" CornerRadius="16"
+                        Padding="25,20" Margin="30,0,50,20">
+                    <!--5 Rows, 2 Cols-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Manufacturer -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Manufacturer" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtOsManufacturer" Grid.Row="0" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Caption -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Caption" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtOsCaption" Grid.Row="1" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Version -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Version" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtOsVersion" Grid.Row="2" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Architecture -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Architecture" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtOsArchitecture" Grid.Row="3" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- BuildNumber -->
+                        <TextBlock Grid.Row="4" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Build Number" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtOsBuildNumber" Grid.Row="4" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== CPU ==================== -->
+                <Label x:Name="LblCPU" Content="CPU"
+                       Foreground="#E2E6ED" FontSize="28"
+                       FontFamily="975 圆体" FontWeight="Bold"
+                       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+                        BorderThickness="1" CornerRadius="16"
+                        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Model" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuModel" Grid.Row="0" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Center"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Cores" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuCores" Grid.Row="1" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Center"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Logical Processors" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuThreads" Grid.Row="2" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Center"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Max Clock Speed" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuClock" Grid.Row="3" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Center"/>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Socket" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuSocket" Grid.Row="4" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Center"/>
+
+                        <TextBlock Grid.Row="5" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Manufacturer" VerticalAlignment="Center"/>
+                        <TextBlock x:Name="TxtCpuManufacturer" Grid.Row="5" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== GPU ==================== -->
+                <Label x:Name="LblGPU" Content="GPU"
+                       Foreground="#E2E6ED" FontSize="28"
+                       FontFamily="975 圆体" FontWeight="Bold"
+                       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+                        BorderThickness="1" CornerRadius="16"
+                        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Name -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Name" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtGpuName" Grid.Row="0" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Memory -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Memory" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtGpuRam" Grid.Row="1" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Driver -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Driver" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtGpuDriver" Grid.Row="2" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Manufacturer -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Manufacturer" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtGpuManufacturer" Grid.Row="3" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== MEM ==================== -->
+                <Label x:Name="LblMEM" Content="Memory"
+                       Foreground="#E2E6ED" FontSize="28"
+                       FontFamily="975 圆体" FontWeight="Bold"
+                       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+                        BorderThickness="1" CornerRadius="16"
+                        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- 制造商 -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Manufacturer" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMemManufacturer" Grid.Row="0" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"/>
+
+                        <!-- 容量 -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Capacity" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMemCapacity" Grid.Row="1" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"/>
+
+                        <!-- 速度 -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Speed" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMemSpeed" Grid.Row="2" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== DISK ==================== -->
+                <Label x:Name="LblDISK" Content="Disk"
+                       Foreground="#E2E6ED" FontSize="28"
+                       FontFamily="975 圆体" FontWeight="Bold"
+                       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+                        BorderThickness="1" CornerRadius="16"
+                        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Model -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Model" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtDiskModel" Grid.Row="0" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Capacity -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Capacity" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtDiskCapacity" Grid.Row="1" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Type -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Type" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtDiskType" Grid.Row="2" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Interface -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Interface" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtDiskInterface" Grid.Row="3" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== MB ==================== -->
+                <Label x:Name="LblMB" Content="Mainboard"
+                       Foreground="#E2E6ED" FontSize="28"
+                       FontFamily="975 圆体" FontWeight="Bold"
+                       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+                        BorderThickness="1" CornerRadius="16"
+                        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Manufacturer -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Manufacturer" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMbManufacturer" Grid.Row="0" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Product -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Product" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMbProduct" Grid.Row="1" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Version -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Version" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMbVersion" Grid.Row="2" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Serial Number -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Serial Number" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtMbSerial" Grid.Row="3" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== NET ==================== -->
+                <Label x:Name="LblNET" Content="Network"
+                       Foreground="#E2E6ED" FontSize="28"
+                       FontFamily="975 圆体" FontWeight="Bold"
+                       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+                        BorderThickness="1" CornerRadius="16"
+                        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Name -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Name" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtNetName" Grid.Row="0" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Manufacturer -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Manufacturer" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtNetManufacturer" Grid.Row="1" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- MAC Address -->
+                        <TextBlock Grid.Row="2" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="MAC Address" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtNetMAC" Grid.Row="2" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Speed -->
+                        <TextBlock Grid.Row="3" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Speed" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtNetSpeed" Grid.Row="3" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Type -->
+                        <TextBlock Grid.Row="4" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Type" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtNetType" Grid.Row="4" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+                <!-- ==================== AUDIO ==================== -->
+                <Label x:Name="LblAUDIO" Content="Audio"
+                       Foreground="#E2E6ED" FontSize="28"
+                       FontFamily="975 圆体" FontWeight="Bold"
+                       Margin="35,15,0,10"/>
+
+                <Border Background="#181C26" BorderBrush="#2E3548"
+                        BorderThickness="1" CornerRadius="16"
+                        Padding="25,20" Margin="30,0,50,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="180"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Name -->
+                        <TextBlock Grid.Row="0" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Name" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtAudioName" Grid.Row="0" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+
+                        <!-- Manufacturer -->
+                        <TextBlock Grid.Row="1" Grid.Column="0"
+                                   Foreground="#8A90A2" FontSize="14"
+                                   Text="Manufacturer" VerticalAlignment="Top" Margin="0,6,0,0"/>
+                        <TextBlock x:Name="TxtAudioManufacturer" Grid.Row="1" Grid.Column="1"
+                                   Foreground="#E2E6ED" FontSize="14"
+                                   Text="" VerticalAlignment="Top" Margin="0,6,0,0"
+                                   TextWrapping="Wrap"/>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- 原内部 Grid 横跨两列，保持按钮居中 -->
+        <Grid x:Name="InnerGrid" Grid.ColumnSpan="3" Margin="0,0,0,-1">
+            <Button x:Name="ToSearch" Content="Click to search"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Width="284" Height="70" FontSize="24"
+                    FontFamily="975 圆体" BorderThickness="8,8,8,8"
+                    Click="ToSearch_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                                CornerRadius="6"
+                                Background="#181C26"
+                                BorderBrush="#2E3548"
+                                BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="False">
+                                <Setter Property="Foreground" Value="#C5CBD6"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#282F40"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#3E4862"/>
+                                <Setter Property="Foreground" Value="#E2E6ED"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#333843"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="#495165"/>
+                                <Setter Property="Foreground" Value="#FFFFFF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Label x:Name="Welcome" Content="" 
+                   HorizontalAlignment="Center" 
+                   Margin="0,118,0,0" 
+                   VerticalAlignment="Top" 
+                   Height="85" Width="446" 
+                   FontSize="36" 
+                   Foreground="#FFC5CBD6" 
+                   HorizontalContentAlignment="Center" 
+                   VerticalContentAlignment="Center" 
+                   FontFamily="975 圆体"/>
+        </Grid>
+    </Grid>
+</Window>
