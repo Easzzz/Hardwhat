@@ -1,7 +1,7 @@
 # Hardwhat
 An WPF (.NET Framework) app for checking hardware information
 ---
-### English | [简体中文](docs/LICENSE-zh.md)
+### English | [简体中文](docs/README-zh.md)
 
 Built on .NET Framework and uses **WMI** (Windows Management Instrumentation) to query hardware information.
 This project is under GPL-3.0 **(Except sidebar and window icons)**.
