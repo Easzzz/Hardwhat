@@ -1,9 +1,18 @@
-﻿using System;
+﻿using Hardwhat.Exporters;
+using Hardwhat.Models;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Management;
+using System.Net.Sockets;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 
 namespace Hardwhat
@@ -16,10 +25,13 @@ namespace Hardwhat
         public MainWindow()
         {
             InitializeComponent();
+            _hardwareReport = new HardwareReport();
             string userName = string.Empty;
             userName = Environment.UserName;
             Welcome.Content = "Welcome! " + userName;
         }
+
+        private HardwareReport _hardwareReport;
 
         private async void ToSearch_Click(object sender, RoutedEventArgs e)
         {
@@ -28,6 +40,7 @@ namespace Hardwhat
             DividingLine.Visibility = Visibility.Visible;
             MainScroll.Visibility = Visibility.Visible;
             Welcome.Visibility = Visibility.Collapsed;
+            Export.Visibility = Visibility.Visible;
             await LoadAllHardwareAsync();
         }
 
@@ -101,6 +114,12 @@ namespace Hardwhat
                         }
                         catch { }
 
+                        _hardwareReport.OsManufacturer = manufacturer;
+                        _hardwareReport.OsCaption = caption;
+                        _hardwareReport.OsVersion = version;
+                        _hardwareReport.OsArchitecture = architecture;
+                        _hardwareReport.OsBuildNumber = buildNumber;
+
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
                             TxtOsManufacturer.Text = manufacturer;
@@ -132,7 +151,7 @@ namespace Hardwhat
                 {
                     foreach (ManagementObject obj in searcher.Get())
                     {
-                        string name = obj["Name"]?.ToString() ?? "N/A";
+                        string CpuModel = obj["Name"]?.ToString() ?? "N/A";
                         string cores = obj["NumberOfCores"]?.ToString() ?? "N/A";
                         string threads = obj["NumberOfLogicalProcessors"]?.ToString() ?? "N/A";
                         uint maxClock = (uint)(obj["MaxClockSpeed"] ?? 0);
@@ -140,10 +159,17 @@ namespace Hardwhat
                         string socket = obj["SocketDesignation"]?.ToString() ?? "N/A";
                         string manufacturer = obj["Manufacturer"]?.ToString() ?? "N/A";
 
+                        _hardwareReport.CpuModel = CpuModel;
+                        _hardwareReport.CpuCores = cores;
+                        _hardwareReport.CpuLogicalProcessors = threads;
+                        _hardwareReport.CpuMaxClockSpeed = clock;
+                        _hardwareReport.CpuSocket = socket;
+                        _hardwareReport.CpuManufacturer = manufacturer;
+
                         // 更新 UI（使用 BeginInvoke 避免卡顿）
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            TxtCpuModel.Text = name;
+                            TxtCpuModel.Text = CpuModel;
                             TxtCpuCores.Text = cores;
                             TxtCpuThreads.Text = threads;
                             TxtCpuClock.Text = clock;
@@ -166,15 +192,18 @@ namespace Hardwhat
 
         private void LoadGpuInfo()
         {
+
+            _hardwareReport.GpuNames.Clear();
+            _hardwareReport.GpuMemories.Clear();
+            _hardwareReport.GpuDrivers.Clear();
+            _hardwareReport.GpuManufacturers.Clear();
+
+            var gpus = new List<(string Name, string Memory, string Driver, string Manufacturer)>();
             try
             {
                 using (ManagementObjectSearcher searcher =
                     new ManagementObjectSearcher("SELECT * FROM Win32_VideoController"))
                 {
-                    string allName = "";
-                    string allRam = "";
-                    string allDriver = "";
-                    string allManufacturer = "";
 
                     foreach (ManagementObject obj in searcher.Get())
                     {
@@ -206,17 +235,45 @@ namespace Hardwhat
                         string driver = obj["DriverVersion"]?.ToString() ?? "N/A";
 
                         // 拼接
+                        //if (allName.Length > 0) allName += "\n";
+                        //allName += name;
+
+                        //if (allRam.Length > 0) allRam += "\n";
+                        //allRam += ram;
+
+                        //if (allDriver.Length > 0) allDriver += "\n";
+                        //allDriver += driver;
+
+                        //if (allManufacturer.Length > 0) allManufacturer += "\n";
+                        //allManufacturer += manufacturer;
+
+                        gpus.Add((name, ram, driver, manufacturer));
+                    }
+
+                    // 循环外，从头遍历 gpus 拼字符串
+                    string allName = "";
+                    string allRam = "";
+                    string allDriver = "";
+                    string allManufacturer = "";
+
+                    foreach (var gpu in gpus)
+                    {
                         if (allName.Length > 0) allName += "\n";
-                        allName += name;
+                        allName += gpu.Name;
 
                         if (allRam.Length > 0) allRam += "\n";
-                        allRam += ram;
+                        allRam += gpu.Memory;
 
                         if (allDriver.Length > 0) allDriver += "\n";
-                        allDriver += driver;
+                        allDriver += gpu.Driver;
 
                         if (allManufacturer.Length > 0) allManufacturer += "\n";
-                        allManufacturer += manufacturer;
+                        allManufacturer += gpu.Manufacturer;
+
+                        _hardwareReport.GpuNames.Add(gpu.Name);
+                        _hardwareReport.GpuMemories.Add(gpu.Memory);
+                        _hardwareReport.GpuDrivers.Add(gpu.Driver);
+                        _hardwareReport.GpuManufacturers.Add(gpu.Manufacturer);
                     }
 
                     Dispatcher.BeginInvoke(new Action(() =>
@@ -257,6 +314,7 @@ namespace Hardwhat
                         string capacityStr = (capacity / (1024 * 1024 * 1024)).ToString() + " GB";
                         string speed = (obj["Speed"]?.ToString() ?? "N/A") + " MHz";
 
+
                         // 拼接多根内存条信息（用换行分隔）
                         if (allManufacturer.Length > 0) allManufacturer += "\n";
                         allManufacturer += manufacturer;
@@ -266,6 +324,10 @@ namespace Hardwhat
 
                         if (allSpeed.Length > 0) allSpeed += "\n";
                         allSpeed += speed;
+
+                        _hardwareReport.MemCapacities.Add(capacityStr);
+                        _hardwareReport.MemManufacturers.Add(manufacturer);
+                        _hardwareReport.MemSpeeds.Add(speed);
                     }
 
                     // 一次性更新 UI
@@ -315,6 +377,11 @@ namespace Hardwhat
                         string type = obj["MediaType"]?.ToString() ?? "N/A";
                         // 接口类型
                         string interfaceType = obj["InterfaceType"]?.ToString() ?? "N/A";
+
+                        _hardwareReport.DiskModels.Add(model);
+                        _hardwareReport.DiskCapacities.Add(capacity);
+                        _hardwareReport.DiskTypes.Add(type);
+                        _hardwareReport.DiskInterfaces.Add(interfaceType);
 
                         // 拼接
                         if (allModel.Length > 0) allModel += "\n";
@@ -371,6 +438,12 @@ namespace Hardwhat
                         if (string.IsNullOrWhiteSpace(serial) || serial.Trim('0') == "")
                             serial = "N/A";
 
+                        _hardwareReport.MbManufacturer = manufacturer;
+                        _hardwareReport.MbProduct = product;
+                        _hardwareReport.MbVersion = version;
+                        _hardwareReport.MbSerialNumber = serial;
+
+
                         // 拼接
                         if (allManufacturer.Length > 0) allManufacturer += "\n";
                         allManufacturer += manufacturer;
@@ -384,6 +457,7 @@ namespace Hardwhat
                         if (allSerial.Length > 0) allSerial += "\n";
                         allSerial += serial;
                     }
+
 
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -442,6 +516,13 @@ namespace Hardwhat
 
                         string adapterType = obj["AdapterType"]?.ToString() ?? "N/A";
 
+                        _hardwareReport.NetNames.Add(name);
+                        _hardwareReport.NetManufacturers.Add(manufacturer);
+                        _hardwareReport.NetMacAddresses.Add(mac);
+                        _hardwareReport.NetSpeeds.Add(speed);
+                        _hardwareReport.NetTypes.Add(adapterType);
+
+
                         if (allName.Length > 0) allName += "\n";
                         allName += name;
 
@@ -492,6 +573,10 @@ namespace Hardwhat
                         string name = obj["Name"]?.ToString() ?? "N/A";
                         string manufacturer = obj["Manufacturer"]?.ToString() ?? "N/A";
 
+                        _hardwareReport.AudioNames.Add(name);
+                        _hardwareReport.AudioManufacturers.Add(manufacturer);
+
+
                         if (allName.Length > 0) allName += "\n";
                         allName += name;
 
@@ -513,6 +598,30 @@ namespace Hardwhat
                     TxtAudioName.Text = "获取失败: " + ex.Message;
                 }));
             }
+        }
+
+
+
+        private void Export_Click(object sender, RoutedEventArgs e)
+        {
+            var exporter = new HeadingMarkdownExporter();
+            string content = exporter.Export(_hardwareReport);
+            var dialog = new SaveFileDialog()
+            {
+                Filter = "Markdown File (*.md)|*.md|All Files (*.*)|*.*",
+                FileName = $"Hardwhat_Report_{DateTime.Now:yyyyMMdd_HHmmss}.md"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                File.WriteAllText(dialog.FileName, content);
+                MessageBox.Show($"Exported successfully at: {dialog.FileName}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("Export failed", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
     }
 }
