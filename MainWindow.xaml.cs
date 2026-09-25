@@ -31,7 +31,7 @@ namespace Hardwhat
             Welcome.Content = "Welcome! " + userName;
         }
 
-        private HardwareReport _hardwareReport;
+        public HardwareReport _hardwareReport;
 
         private async void ToSearch_Click(object sender, RoutedEventArgs e)
         {
@@ -414,7 +414,7 @@ namespace Hardwhat
                 }));
             }
         }
-        
+
         private void LoadMainboardInfo()
         {
             try
@@ -604,24 +604,9 @@ namespace Hardwhat
 
         private void Export_Click(object sender, RoutedEventArgs e)
         {
-            var exporter = new HeadingMarkdownExporter();
-            string content = exporter.Export(_hardwareReport);
-            var dialog = new SaveFileDialog()
-            {
-                Filter = "Markdown File (*.md)|*.md|All Files (*.*)|*.*",
-                FileName = $"Hardwhat_Report_{DateTime.Now:yyyyMMdd_HHmmss}.md"
-            };
-
-            if (dialog.ShowDialog() == true)
-            {
-                File.WriteAllText(dialog.FileName, content);
-                MessageBox.Show($"Exported successfully at: {dialog.FileName}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
-            {
-                MessageBox.Show("Export failed", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
+            var dlg = new ExportDialog(_hardwareReport);
+            dlg.Owner = this;
+            dlg.ShowDialog();
         }
     }
 }
