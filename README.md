@@ -21,7 +21,7 @@ With a clean and intuitive UI, you can easily explore your:
 **Main Logic is in `MainWindow.xaml.cs` and Design is in `MainWindow.xaml`**
 
 ## Hardwhat 2.0 New Feature: Export the query result in 3 ways
-Click the `Export icon`![Export icon](data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGNsYXNzPSJsdWNpZGUgbHVjaWRlLWZpbGUtdXAgcHJldmlldy1pY29uIj48cGF0aCBkPSJNNiAyMmEyIDIgMCAwIDEtMi0yVjRhMiAyIDAgMCAxIDItMmg4YTIuNCAyLjQgMCAwIDEgMS43MDQuNzA2bDMuNTg4IDMuNTg4QTIuNCAyLjQgMCAwIDEgMjAgOHYxMmEyIDIgMCAwIDEtMiAyeiIvPjxwYXRoIGQ9Ik0xNCAydjVhMSAxIDAgMCAwIDEgMWg1Ii8+PHBhdGggZD0iTTEyIDEydjYiLz48cGF0aCBkPSJtMTUgMTUtMy0zLTMgMyIvPjwvc3ZnPg==), you can choose as a Table-style or Heading-style `.md` or `.csv`
+Click the `Export icon`![Export icon](https://cdn.jsdelivr.net/npm/lucide-static@latest/icons/file-up.svg), you can choose as a Table-style or Heading-style `.md` or `.csv`
 
 ![Export dialog](docs/exportdialog.png)
 **⌃ Export dialog**
