@@ -330,7 +330,7 @@
                 <!-- ==================== OS ==================== -->
                 <Label x:Name="LblOS" Content="Operating System"
                        Foreground="#E2E6ED" FontSize="28"
-                       FontFamily="975 圆体" FontWeight="Bold"
+                       FontFamily="Consolas" FontWeight="Bold"
                        Margin="35,15,0,10"/>
 
                 <Border Background="#181C26" BorderBrush="#2E3548"
@@ -400,7 +400,7 @@
                 <!-- ==================== CPU ==================== -->
                 <Label x:Name="LblCPU" Content="CPU"
                        Foreground="#E2E6ED" FontSize="28"
-                       FontFamily="975 圆体" FontWeight="Bold"
+                       FontFamily="consolas" FontWeight="Bold"
                        Margin="35,15,0,10"/>
 
                 <Border Background="#181C26" BorderBrush="#2E3548"
@@ -467,7 +467,7 @@
                 <!-- ==================== GPU ==================== -->
                 <Label x:Name="LblGPU" Content="GPU"
                        Foreground="#E2E6ED" FontSize="28"
-                       FontFamily="975 圆体" FontWeight="Bold"
+                       FontFamily="consolas" FontWeight="Bold"
                        Margin="35,15,0,10"/>
 
                 <Border Background="#181C26" BorderBrush="#2E3548"
@@ -526,7 +526,7 @@
                 <!-- ==================== MEM ==================== -->
                 <Label x:Name="LblMEM" Content="Memory"
                        Foreground="#E2E6ED" FontSize="28"
-                       FontFamily="975 圆体" FontWeight="Bold"
+                       FontFamily="consolas" FontWeight="Bold"
                        Margin="35,15,0,10"/>
 
                 <Border Background="#181C26" BorderBrush="#2E3548"
@@ -572,7 +572,7 @@
                 <!-- ==================== DISK ==================== -->
                 <Label x:Name="LblDISK" Content="Disk"
                        Foreground="#E2E6ED" FontSize="28"
-                       FontFamily="975 圆体" FontWeight="Bold"
+                       FontFamily="consolas" FontWeight="Bold"
                        Margin="35,15,0,10"/>
 
                 <Border Background="#181C26" BorderBrush="#2E3548"
@@ -632,7 +632,7 @@
                 <!-- ==================== MB ==================== -->
                 <Label x:Name="LblMB" Content="Mainboard"
                        Foreground="#E2E6ED" FontSize="28"
-                       FontFamily="975 圆体" FontWeight="Bold"
+                       FontFamily="consolas" FontWeight="Bold"
                        Margin="35,15,0,10"/>
 
                 <Border Background="#181C26" BorderBrush="#2E3548"
@@ -691,7 +691,7 @@
                 <!-- ==================== NET ==================== -->
                 <Label x:Name="LblNET" Content="Network"
                        Foreground="#E2E6ED" FontSize="28"
-                       FontFamily="975 圆体" FontWeight="Bold"
+                       FontFamily="consolas" FontWeight="Bold"
                        Margin="35,15,0,10"/>
 
                 <Border Background="#181C26" BorderBrush="#2E3548"
@@ -760,7 +760,7 @@
                 <!-- ==================== AUDIO ==================== -->
                 <Label x:Name="LblAUDIO" Content="Audio"
                        Foreground="#E2E6ED" FontSize="28"
-                       FontFamily="975 圆体" FontWeight="Bold"
+                       FontFamily="consolas" FontWeight="Bold"
                        Margin="35,15,0,10"/>
 
                 <Border Background="#181C26" BorderBrush="#2E3548"
@@ -804,7 +804,7 @@
             <Button x:Name="ToSearch" Content="Click to search"
                     HorizontalAlignment="Center" VerticalAlignment="Center"
                     Width="284" Height="70" FontSize="24"
-                    FontFamily="975 圆体" BorderThickness="8,8,8,8"
+                    FontFamily="Microsoft Sans Serif" BorderThickness="8,8,8,8"
                     Click="ToSearch_Click">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -843,7 +843,7 @@
                    Foreground="#FFC5CBD6" 
                    HorizontalContentAlignment="Center" 
                    VerticalContentAlignment="Center" 
-                   FontFamily="975 圆体"/>
+                   FontFamily="Microsoft Sans Serif"/>
         </Grid>
         <Button x:Name="Export" Content="Button" HorizontalAlignment="Center" Height="38" VerticalAlignment="Bottom" Width="38" RenderTransformOrigin="0.123,0.748" Margin="2,0,0,6" Click="Export_Click" Visibility="Hidden">
         <Button.Template>

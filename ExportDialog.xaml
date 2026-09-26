@@ -9,7 +9,7 @@
     <Window.Resources>
         <Style x:Key="DarkButtonStyle" TargetType="Button">
             <Setter Property="Foreground" Value="#C5CBD6"/>
-            <Setter Property="FontFamily" Value="霞鹜975圆体SC 400W"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -47,7 +47,7 @@
         Height="50" Width="182
                 "
         Margin="15,94,0,0"
-        Click="AsTableMd_Click"/>
+        Click="AsTableMd_Click" FontFamily="Microsoft Sans Serif"/>
 
         <Button x:Name="AsCsv"
         Content="Export as CSV"
@@ -55,21 +55,21 @@
         HorizontalAlignment="Left" VerticalAlignment="Top"
         Height="50" Width="182
                 "
-        Margin="15,154,0,0" Click="AsCsv_Click"/>
+        Margin="15,154,0,0" Click="AsCsv_Click" FontFamily="Microsoft Sans Serif"/>
 
         <Button x:Name="AsHeadingMarkdown"
         Content="Export as Heading Markdown"
         Style="{StaticResource DarkButtonStyle}"
         HorizontalAlignment="Left" VerticalAlignment="Top"
         Height="50" Width="182"
-        Margin="203,94,0,0" Click="AsHeadingMarkdown_Click" FontSize="11"/>
+        Margin="203,94,0,0" Click="AsHeadingMarkdown_Click" FontSize="11" FontFamily="Microsoft Sans Serif"/>
 
         <Button x:Name="Cancel"
         Content="Cancel export"
         Style="{StaticResource DarkButtonStyle}"
         HorizontalAlignment="Left" VerticalAlignment="Top"
         Height="50" Width="182"
-        Margin="203,154,0,0" Click="Cancel_Click"/>
-        <Label Content="Select an export format" HorizontalAlignment="Center" Height="50" Margin="0,24,0,0" VerticalAlignment="Top" Width="324" Background="{x:Null}" Foreground="#FFCFD2DC" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="975 圆体" FontSize="22"/>
+        Margin="203,154,0,0" Click="Cancel_Click" FontFamily="Microsoft Sans Serif"/>
+        <Label Content="Select an export format" HorizontalAlignment="Left" Height="50" Margin="25,26,0,0" VerticalAlignment="Top" Width="344" Background="{x:Null}" Foreground="#FFCFD2DC" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Microsoft Sans Serif" FontSize="22"/>
     </Grid>
 </Window>
