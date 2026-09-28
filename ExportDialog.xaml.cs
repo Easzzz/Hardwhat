@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Hardwhat;
+using Hardwhat.Exporters;
+using Hardwhat.Models;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,10 +16,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Hardwhat.Exporters;
-using Hardwhat.Models;
-using Hardwhat;
-using Microsoft.Win32;
 
 namespace Hardwhat
 {
@@ -88,6 +88,28 @@ namespace Hardwhat
             {
                 Filter = "Markdown File (*.md)|*.md|All Files (*.*)|*.*",
                 FileName = $"Hardwhat_Report_{DateTime.Now:yyyyMMdd_HHmmss}.md"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                File.WriteAllText(dialog.FileName, content);
+                MessageBox.Show($"Exported successfully at: {dialog.FileName}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Export failed", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void AsHtml_Click(object sender, RoutedEventArgs e)
+        {
+            var exporter = new HtmlExporter();
+            string content = exporter.Export(_report);
+            var dialog = new SaveFileDialog()
+            {
+                Filter = "HTML File (*.html)|*.html|All Files (*.*)|*.*",
+                FileName = $"Hardwhat_Report_{DateTime.Now:yyyyMMdd_HHmmss}.html"
             };
 
             if (dialog.ShowDialog() == true)

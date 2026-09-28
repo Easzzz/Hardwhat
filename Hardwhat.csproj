@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="Exporters\CsvExporter.cs" />
     <Compile Include="Exporters\HeadingMarkdownExporter.cs" />
+    <Compile Include="Exporters\HtmlExporter.cs" />
     <Compile Include="Exporters\TableMarkdownExporter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
