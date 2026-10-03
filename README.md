@@ -46,11 +46,11 @@ The `HTML` has a similar style as the Hardwhat App, and it can automatically ada
 
 
 ![HTML-Desktop](docs/html.png)
-**⌃ Desktop Layout HTML
+**⌃ Desktop Layout HTML**
 
 
 ![HTML-Desktop](docs/html-mobile.png)
-**⌃ Mobile Layout HTML
+**⌃ Mobile Layout HTML**
 
 
 All icons are derived from [Lucide](https://lucide.dev) and converted to XAML Path, licensed under the [ISC License](docs/LICENSE-Lucide).
