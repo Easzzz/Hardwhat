@@ -26,12 +26,6 @@ namespace Hardwhat.Models
         public string CpuSocket { get; set; }
         public string CpuManufacturer { get; set; }
 
-        //---Gpu---
-
-        //public string GpuName { get; set; }
-        //public string GpuMemory { get; set; }
-        //public string GpuDriver { get; set; }
-        //public string GpuManufacturer { get; set; }
 
         //---Gpu---
         public List<string> GpuNames { get; set; } = new List<string>();
@@ -40,22 +34,10 @@ namespace Hardwhat.Models
         public List<string> GpuManufacturers { get; set; } = new List<string>();
 
 
-        //---Mem---
-
-        //public string MemManufacturer { get; set; }
-        //public string MemCapacity { get; set; }
-        //public string MemSpeed { get; set; }
-
         public List<string> MemManufacturers { get; set; } = new List<string>();
         public List<string> MemCapacities { get; set; } = new List<string>();
         public List<string> MemSpeeds { get; set; } = new List<string>();
 
-        //---Disk---
-
-        //public string DiskModel { get; set; }
-        //public string DiskCapacity { get; set; }
-        //public string DiskType { get; set; }
-        //public string DiskInterface { get; set; }
 
         public List<string> DiskModels { get; set; } = new List<string>();
         public List<string> DiskCapacities { get; set; } = new List<string>();

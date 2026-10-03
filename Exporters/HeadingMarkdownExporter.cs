@@ -58,14 +58,14 @@ namespace Hardwhat.Exporters
             AddAsBold("Caption:"); AddAsPlain($" {r.OsCaption}");
             AddAsBold("Version:"); AddAsPlain($" {r.OsVersion}");
             AddAsBold("Architecture:"); AddAsPlain($" {r.OsArchitecture}");
-            AddAsBold("BuildNumber:"); AddAsPlain($" {r.OsBuildNumber}");
+            AddAsBold("Build Number:"); AddAsPlain($" {r.OsBuildNumber}");
             AddAsNewLine();
             AddAsHorizontalRule();
 
             AddAsH2("2.CPU");
             AddAsBold("Model:"); AddAsPlain($" {r.CpuModel}");
             AddAsBold("Cores:"); AddAsPlain($" {r.CpuCores}");
-            AddAsBold("Logical Processors:"); AddAsPlain($" {r.CpuLogicalProcessors}");
+            AddAsBold("Threads:"); AddAsPlain($" {r.CpuLogicalProcessors}");
             AddAsBold("Max Clock Speed:"); AddAsPlain($" {r.CpuMaxClockSpeed}");
             AddAsBold("Socket:"); AddAsPlain($" {r.CpuSocket}");
             AddAsBold("Manufacturer:"); AddAsPlain($" {r.CpuManufacturer}");
@@ -126,7 +126,7 @@ namespace Hardwhat.Exporters
             AddAsBold("Manufacturer:"); AddAsPlain($" {r.MbManufacturer}");
             AddAsBold("Product:"); AddAsPlain($" {r.MbProduct}");
             AddAsBold("Version:"); AddAsPlain($" {r.MbVersion}");
-            AddAsBold("SerialNumber:"); AddAsPlain($" {r.MbSerialNumber}");
+            AddAsBold("Serial Number:"); AddAsPlain($" {r.MbSerialNumber}");
             AddAsNewLine();
             AddAsHorizontalRule();
 
@@ -140,7 +140,7 @@ namespace Hardwhat.Exporters
                     AddAsNewLine();
                     AddAsBold("Name:"); AddAsPlain($" {r.NetNames[i]}");
                     AddAsBold("Manufacturer:"); AddAsPlain($" {r.NetManufacturers[i]}");
-                    AddAsBold("MacAddress:"); AddAsPlain($" {r.NetMacAddresses[i]}");
+                    AddAsBold("Mac Address:"); AddAsPlain($" {r.NetMacAddresses[i]}");
                     AddAsBold("Type:"); AddAsPlain($" {r.NetTypes[i]}");
                     AddAsBold("Speed:"); AddAsPlain($" {r.NetSpeeds[i]}");
                     AddAsNewLine();

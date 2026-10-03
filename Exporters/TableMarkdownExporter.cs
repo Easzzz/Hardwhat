@@ -22,7 +22,7 @@ namespace Hardwhat.Exporters
             // 1. OS
             sb.AppendLine("## 1.OS");
             sb.AppendLine();
-            sb.AppendLine("| Manufacturer | Caption | Version | Architecture | BuildNumber |");
+            sb.AppendLine("| Manufacturer | Caption | Version | Architecture | Build Number |");
             sb.AppendLine("| --- | --- | --- | --- | --- |");
             sb.AppendLine($"| {Esc(r.OsManufacturer)} | {Esc(r.OsCaption)} | {Esc(r.OsVersion)} | {Esc(r.OsArchitecture)} | {Esc(r.OsBuildNumber)} |");
             sb.AppendLine();
@@ -32,7 +32,7 @@ namespace Hardwhat.Exporters
             // 2. CPU
             sb.AppendLine("## 2.CPU");
             sb.AppendLine();
-            sb.AppendLine("| Model | Cores | Logical Processors | Max Clock Speed | Socket | Manufacturer |");
+            sb.AppendLine("| Model | Cores | Threads | Max Clock Speed | Socket | Manufacturer |");
             sb.AppendLine("| --- | ---: | ---: | --- | --- | --- |");
             sb.AppendLine($"| {Esc(r.CpuModel)} | {Esc(r.CpuCores)} | {Esc(r.CpuLogicalProcessors)} | {Esc(r.CpuMaxClockSpeed)} | {Esc(r.CpuSocket)} | {Esc(r.CpuManufacturer)} |");
             sb.AppendLine();
@@ -102,7 +102,7 @@ namespace Hardwhat.Exporters
             // 6. MOTHERBOARD
             sb.AppendLine("## 6.MOTHERBOARD");
             sb.AppendLine();
-            sb.AppendLine("| Manufacturer | Product | Version | SerialNumber |");
+            sb.AppendLine("| Manufacturer | Product | Version | Serial Number |");
             sb.AppendLine("| --- | --- | --- | --- |");
             sb.AppendLine($"| {Esc(r.MbManufacturer)} | {Esc(r.MbProduct)} | {Esc(r.MbVersion)} | {Esc(r.MbSerialNumber)} |");
             sb.AppendLine();
@@ -118,7 +118,7 @@ namespace Hardwhat.Exporters
             }
             else
             {
-                sb.AppendLine("| # | Name | Manufacturer | MacAddress | Type | Speed |");
+                sb.AppendLine("| # | Name | Manufacturer | Mac Address | Type | Speed |");
                 sb.AppendLine("| --- | --- | --- | --- | --- | ---: |");
                 for (int i = 0; i < r.NetNames.Count; i++)
                 {

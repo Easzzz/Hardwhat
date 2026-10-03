@@ -436,7 +436,7 @@
 
                         <TextBlock Grid.Row="2" Grid.Column="0"
                                    Foreground="#8A90A2" FontSize="14"
-                                   Text="Logical Processors" VerticalAlignment="Center"/>
+                                   Text="Threads" VerticalAlignment="Center"/>
                         <TextBlock x:Name="TxtCpuThreads" Grid.Row="2" Grid.Column="1"
                                    Foreground="#E2E6ED" FontSize="14"
                                    Text="" VerticalAlignment="Center"/>

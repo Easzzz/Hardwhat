@@ -17,14 +17,13 @@ using System.Windows.Media.Animation;
 
 namespace Hardwhat
 {
-    /// <summary>
-    /// MainWindow.xaml 的交互逻辑
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+            // 新建模板的实例
             _hardwareReport = new HardwareReport();
             string userName = string.Empty;
             userName = Environment.UserName;
@@ -75,7 +74,7 @@ namespace Hardwhat
             MainScroll.ScrollToVerticalOffset(targetOffset);
         }
 
-        // 各按钮的 Click 事件
+        // 各侧边栏按钮的 Click 事件
         private void BtnOS_Click(object sender, RoutedEventArgs e) => ScrollToElement(LblOS);
         private void BtnCPU_Click(object sender, RoutedEventArgs e) => ScrollToElement(LblCPU);
         private void BtnGPU_Click(object sender, RoutedEventArgs e) => ScrollToElement(LblGPU);
@@ -133,6 +132,7 @@ namespace Hardwhat
                     }
                 }
             }
+
             catch (Exception ex)
             {
                 Dispatcher.BeginInvoke(new Action(() =>
@@ -151,7 +151,7 @@ namespace Hardwhat
                 {
                     foreach (ManagementObject obj in searcher.Get())
                     {
-                        string CpuModel = obj["Name"]?.ToString() ?? "N/A";
+                        string cpuModel = obj["Name"]?.ToString() ?? "N/A";
                         string cores = obj["NumberOfCores"]?.ToString() ?? "N/A";
                         string threads = obj["NumberOfLogicalProcessors"]?.ToString() ?? "N/A";
                         uint maxClock = (uint)(obj["MaxClockSpeed"] ?? 0);
@@ -159,17 +159,16 @@ namespace Hardwhat
                         string socket = obj["SocketDesignation"]?.ToString() ?? "N/A";
                         string manufacturer = obj["Manufacturer"]?.ToString() ?? "N/A";
 
-                        _hardwareReport.CpuModel = CpuModel;
+                        _hardwareReport.CpuModel = cpuModel;
                         _hardwareReport.CpuCores = cores;
                         _hardwareReport.CpuLogicalProcessors = threads;
                         _hardwareReport.CpuMaxClockSpeed = clock;
                         _hardwareReport.CpuSocket = socket;
                         _hardwareReport.CpuManufacturer = manufacturer;
 
-                        // 更新 UI（使用 BeginInvoke 避免卡顿）
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            TxtCpuModel.Text = CpuModel;
+                            TxtCpuModel.Text = cpuModel;
                             TxtCpuCores.Text = cores;
                             TxtCpuThreads.Text = threads;
                             TxtCpuClock.Text = clock;
@@ -233,19 +232,6 @@ namespace Hardwhat
                         catch { }
 
                         string driver = obj["DriverVersion"]?.ToString() ?? "N/A";
-
-                        // 拼接
-                        //if (allName.Length > 0) allName += "\n";
-                        //allName += name;
-
-                        //if (allRam.Length > 0) allRam += "\n";
-                        //allRam += ram;
-
-                        //if (allDriver.Length > 0) allDriver += "\n";
-                        //allDriver += driver;
-
-                        //if (allManufacturer.Length > 0) allManufacturer += "\n";
-                        //allManufacturer += manufacturer;
 
                         gpus.Add((name, ram, driver, manufacturer));
                     }
@@ -312,7 +298,7 @@ namespace Hardwhat
                         string manufacturer = obj["Manufacturer"]?.ToString() ?? "N/A";
                         ulong capacity = (ulong)(obj["Capacity"] ?? 0);
                         string capacityStr = (capacity / (1024 * 1024 * 1024)).ToString() + " GB";
-                        string speed = (obj["Speed"]?.ToString() ?? "N/A") + " MHz";
+                        string speed = (obj["Speed"]?.ToString() ?? "N/A") + " MT/s";
 
 
                         // 拼接多根内存条信息（用换行分隔）
@@ -496,8 +482,7 @@ namespace Hardwhat
                         bool enabled = false;
                         try { enabled = Convert.ToBoolean(obj["NetEnabled"] ?? false); }
                         catch { continue; }
-                        if (!enabled)
-                            continue;
+                        if (!enabled) continue;
 
                         string name = obj["Name"]?.ToString() ?? "N/A";
                         string manufacturer = obj["Manufacturer"]?.ToString() ?? "N/A";

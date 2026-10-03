@@ -20,14 +20,14 @@ namespace Hardwhat.Exporters
             AppendRow(sb, "OS", "", "Caption", r.OsCaption);
             AppendRow(sb, "OS", "", "Version", r.OsVersion);
             AppendRow(sb, "OS", "", "Architecture", r.OsArchitecture);
-            AppendRow(sb, "OS", "", "BuildNumber", r.OsBuildNumber);
+            AppendRow(sb, "OS", "", "Build Number", r.OsBuildNumber);
             AppendRow(sb, "", "", "", "");
 
             // 2. CPU
             AppendRow(sb, "CPU", "", "Model", r.CpuModel);
             AppendRow(sb, "CPU", "", "Cores", r.CpuCores);
-            AppendRow(sb, "CPU", "", "LogicalProcessors", r.CpuLogicalProcessors);
-            AppendRow(sb, "CPU", "", "MaxClockSpeed", r.CpuMaxClockSpeed);
+            AppendRow(sb, "CPU", "", "Threads", r.CpuLogicalProcessors);
+            AppendRow(sb, "CPU", "", "Max Clock Speed", r.CpuMaxClockSpeed);
             AppendRow(sb, "CPU", "", "Socket", r.CpuSocket);
             AppendRow(sb, "CPU", "", "Manufacturer", r.CpuManufacturer);
             AppendRow(sb, "", "", "", "");
@@ -65,7 +65,7 @@ namespace Hardwhat.Exporters
             AppendRow(sb, "MOTHERBOARD", "", "Manufacturer", r.MbManufacturer);
             AppendRow(sb, "MOTHERBOARD", "", "Product", r.MbProduct);
             AppendRow(sb, "MOTHERBOARD", "", "Version", r.MbVersion);
-            AppendRow(sb, "MOTHERBOARD", "", "SerialNumber", r.MbSerialNumber);
+            AppendRow(sb, "MOTHERBOARD", "", "Serial Number", r.MbSerialNumber);
             AppendRow(sb, "", "", "", "");
 
             // 7. NETWORK
@@ -73,7 +73,7 @@ namespace Hardwhat.Exporters
             {
                 AppendRow(sb, "NETWORK", $"#{i}", "Name", r.NetNames[i]);
                 AppendRow(sb, "NETWORK", $"#{i}", "Manufacturer", r.NetManufacturers[i]);
-                AppendRow(sb, "NETWORK", $"#{i}", "MacAddress", r.NetMacAddresses[i]);
+                AppendRow(sb, "NETWORK", $"#{i}", "Mac Address", r.NetMacAddresses[i]);
                 AppendRow(sb, "NETWORK", $"#{i}", "Type", r.NetTypes[i]);
                 AppendRow(sb, "NETWORK", $"#{i}", "Speed", r.NetSpeeds[i]);
                 AppendRow(sb, "", "", "", "");
