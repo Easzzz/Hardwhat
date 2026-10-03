@@ -36,6 +36,22 @@ Click the `Export icon`![Export icon](https://cdn.jsdelivr.net/npm/lucide-static
 ![The exported CSV](docs/csv.png)
 **⌃ CSV**
 
+### Hardwhat 2.5 New Feature: Export the query result as A dark-style HTML
+
+
+![New Export dialog](docs/new-exportdialog.png)
+**⌃ The Newest Export dialog**
+
+The `HTML` has a similar style as the Hardwhat App, and it can automatically adapt to both **Desktop** and **Mobile** layouts.
+
+
+![HTML-Desktop](docs/html.png)
+**⌃ Desktop Layout HTML
+
+
+![HTML-Desktop](docs/html-mobile.png)
+**⌃ Mobile Layout HTML
+
 
 All icons are derived from [Lucide](https://lucide.dev) and converted to XAML Path, licensed under the [ISC License](docs/LICENSE-Lucide).
 
